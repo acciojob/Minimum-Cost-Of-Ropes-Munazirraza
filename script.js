@@ -1,64 +1,42 @@
- //function calculateMinCost() {
-//   //your code here
-// 	var str=document.getElementById('rope-lengths').value;
-  
-//   var arr=str.split(',');
-  
-//   var brr=arr.map(function(str){
-//   return parseInt(str);
-//   });
-//   var crr=[];
-	
-// 	while(brr.length>1){
-// 	brr.sort(function(a, b){return a - b});
-      
-// 		var a=brr.shift();
-// 		var b=brr.shift();
-// 		var c=a+b;
-//         crr.push(c);
-       
-// 		brr.unshift(c);
-        
-// 	}
-	
-	
-//     var count=0;
-//     for(let i=0;i<crr.length;i++){
-//     count+=crr[i];
-//     }
-
-// 	document.getElementById('result').innerHTML=count;
-
-function calculateMinCost() {
-  var str = document.getElementById('rope-lengths').value;
-  var arr = str.split(',');
-  var ropes = arr.map(function(str) {
-    return parseInt(str);
-  });
-
-  // Helper function to get the minimum value and its index from an array
-  function getMin(arr) {
-    var min = arr[0];
-    var minIndex = 0;
-    for (var i = 1; i < arr.length; i++) {
-      if (arr[i] < min) {
-        min = arr[i];
-        minIndex = i;
-      }
-    }
-    return { value: min, index: minIndex };
+function compare(a, b) {
+  if (a < b) {
+      return -1;
+  } else if (a > b) {
+      return 1;
+  } else {
+      return 0;
   }
-
-  var totalCost = 0;
-  while (ropes.length > 1) {
-    var min1 = getMin(ropes);
-    ropes.splice(min1.index, 1);
-    var min2 = getMin(ropes);
-    ropes.splice(min2.index, 1);
-    var sum = min1.value + min2.value;
-    totalCost += sum;
-    ropes.push(sum);
-  }
-
-  document.getElementById('result').innerHTML = totalCost;
 }
+ 
+ 
+ 
+function calculateMinCost() {
+  //your code here
+  let str=document.getElementById('rope-lengths').value.split(",");
+  let arr=str.map((str)=>parseInt(str));
+  // console.log(arr);
+  
+let total=0;
+arr=arr.sort(compare);
+// console.log("arr ",arr);
+while(arr.length>=2){
+  let sum=arr[0]+arr[1];
+  // console.log(sum);
+  let rem=[];
+  rem.push(sum);
+  for(let k=2;k<arr.length;k++){
+    rem.push(arr[k]);
+  }
+  rem=rem.sort(compare);
+  // console.log("rem ",rem);
+  arr=[...rem];
+  // console.log("arr ",arr);
+  total=total+sum;
+  // console.log("total "+total+"----------------------");
+}
+console.log(total);
+ 
+ 
+let result=document.getElementById('result');
+result.innerHTML=total;
+}  
